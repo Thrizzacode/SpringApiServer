@@ -10,10 +10,10 @@ public class UserDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-//    public void addUser(User pUser){
-//        jdbcTemplate.update("INSERT INTO user(id, user_name) "
-//                + "VALUES (?,?)", pUser.getId(), pUser.getUserName());
-//    }
+    public void addUser(User pUser){
+        jdbcTemplate.update("INSERT INTO user(id, user_name) "
+                + "VALUES (?,?)", pUser.getId(), pUser.getUserName());
+    }
 
     public Object getUser() {
         Object a ;
