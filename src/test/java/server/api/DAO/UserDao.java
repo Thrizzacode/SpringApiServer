@@ -1,5 +1,5 @@
 package server.api.DAO;
-import server.api.model.AppUser;
+import server.api.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -17,7 +17,7 @@ public class UserDao {
     public Object getUser() {
         Object a ;
 
-        a = jdbcTemplate.queryForObject("select id,user_name from user", AppUser.class);
+        a = jdbcTemplate.queryForObject("select id,user_name from user", User.class);
         return a;
     }
 }
