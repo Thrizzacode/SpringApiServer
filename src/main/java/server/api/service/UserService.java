@@ -3,7 +3,6 @@ package server.api.service;
 import server.api.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import server.api.DAO.UserDao;
 import server.api.repository.UserRepository;
 
 import javax.persistence.EntityManager;

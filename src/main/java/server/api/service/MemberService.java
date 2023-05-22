@@ -22,6 +22,10 @@ public class MemberService {
         return memberRepository.save(member);
     }
 
+    public Member editMember(Member member) {
+        return memberRepository.save(member);
+    }
+
     public void deleteById(Long id){
         memberRepository.deleteById(id);
     }

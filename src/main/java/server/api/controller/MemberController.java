@@ -24,9 +24,15 @@ public class MemberController {
         return memberService.addMember(member);
     }
 
+    @PutMapping("/members/edit")
+    @CrossOrigin("*")
+    public Member editMember(@RequestBody Member member) {
+        return memberService.editMember(member);
+    }
+
     @DeleteMapping("/members/delete/{id}")
     @CrossOrigin("*")
-    public String deleteById(@PathVariable Long id){
+    public String deleteById(@PathVariable Long id) {
         memberService.deleteById(id);
         return "Deleted";
     }
