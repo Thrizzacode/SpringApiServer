@@ -4,28 +4,28 @@ import server.api.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import server.api.DAO.UserDao;
+import server.api.repository.UserRepository;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
 @Service
 public class UserService {
     @Autowired
-    UserDao userDao;
-    public void addUser(User pUser){
-        userDao.addUser(pUser);
+   private UserRepository userRepository;
+
+    @Autowired
+    private EntityManager em;
+
+    public User getUser(String username) {
+        return userRepository.findByUsername(username);
     }
 
-//    public AppUser getUser(){
-//
-//        return userDao.getUser();
-//    }
-
-    public List<User> getAllUsers(){
-        return userDao.getAllUsers();
-    }
-
-    public boolean userLogin(User user) {
-        User userVerify = userDao.getUser(user.getUsername());
-        return userVerify.getPassword().equals(user.getPassword());
+    public boolean userLogin(String username, String password) {
+        User userVerify = userRepository.findByUsernameAndPassword(username, password);
+        if (userVerify != null) {
+            return userVerify.getPassword().equals(password);
+        }
+        return false;
     }
 }

@@ -2,8 +2,14 @@ package server.api.model;
 
 import org.springframework.stereotype.Component;
 
-@Component
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "cms_user")
 public class User {
+    @Id
     private String id;
     private String username;
     private String password;

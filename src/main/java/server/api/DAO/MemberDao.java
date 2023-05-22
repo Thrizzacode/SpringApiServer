@@ -50,7 +50,7 @@ public class MemberDao {
             Member member = new Member();
             member.setId(rs.getLong("id"));
             member.setName(rs.getString("name"));
-            member.setPhone(rs.getInt("phone"));
+            member.setPhone(rs.getString("phone"));
             member.setAddress(rs.getString("address"));
             return member;
         }

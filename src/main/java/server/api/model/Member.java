@@ -1,10 +1,17 @@
 package server.api.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "cms_membership")
 public class Member {
 
+    @Id
     private long id;
     private String name;
-    private int phone;
+    private String phone;
     private String address;
 
     public long getId() {
@@ -23,11 +30,11 @@ public class Member {
         this.name = name;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 

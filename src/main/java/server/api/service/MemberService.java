@@ -2,18 +2,28 @@ package server.api.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import server.api.DAO.MemberDao;
 import server.api.model.Member;
+import server.api.repository.MemberRepository;
 
-import java.util.List;
+import javax.transaction.Transactional;
 
+@Transactional
 @Service
 public class MemberService {
 
     @Autowired
-    MemberDao memberDao;
+    MemberRepository memberRepository;
 
-    public List<Member> getAllMembers(){
-        return memberDao.getAllMembers();
+    public Iterable<Member> getAll() {
+        return memberRepository.findAll();
     }
+
+    public Member addMember(Member member) {
+        return memberRepository.save(member);
+    }
+
+    public void deleteById(Long id){
+        memberRepository.deleteById(id);
+    }
+
 }
