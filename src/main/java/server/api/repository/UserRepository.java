@@ -1,13 +1,11 @@
 package server.api.repository;
 
 import org.springframework.data.repository.CrudRepository;
-import server.api.model.User;
+import server.api.model.CmsUser;
 
-import java.util.List;
+public interface UserRepository extends CrudRepository<CmsUser, String> {
 
-public interface UserRepository extends CrudRepository<User, String> {
+    CmsUser findByUsername(String username);
 
-    User findByUsername(String username);
-
-    User findByUsernameAndPassword(String username, String password);
+    CmsUser findByUsernameAndPassword(String username, String password);
 }

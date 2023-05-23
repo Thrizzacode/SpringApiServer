@@ -4,10 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import server.api.model.User;
+import server.api.model.CmsUser;
 import server.api.service.UserService;
-
-import java.util.List;
 
 
 @RestController
@@ -19,10 +17,10 @@ public class UserController {
 
     @PostMapping("/users/login")
     @CrossOrigin("*")
-    public ResponseEntity<?> userLogin(@RequestBody User user) {
-        System.out.println(user.getUsername());
-        System.out.println(user.getPassword());
-        if (userService.userLogin(user.getUsername(), user.getPassword())) {
+    public ResponseEntity<?> userLogin(@RequestBody CmsUser cmsUser) {
+        System.out.println(cmsUser.getUsername());
+        System.out.println(cmsUser.getPassword());
+        if (userService.userLogin(cmsUser.getUsername(), cmsUser.getPassword())) {
             System.out.println("OK");
             LoginSuccessInfo successInfo = new LoginSuccessInfo();
             return ResponseEntity.ok(successInfo);
@@ -74,9 +72,9 @@ public class UserController {
     }
 
     @GetMapping("/users/get")
-    public User getUser(@RequestBody User user) {
-        System.out.println(user.getUsername());
-        System.out.println(userService.getUser(user.getUsername()));
-        return userService.getUser(user.getUsername());
+    public CmsUser getUser(@RequestBody CmsUser cmsUser) {
+        System.out.println(cmsUser.getUsername());
+        System.out.println(userService.getUser(cmsUser.getUsername()));
+        return userService.getUser(cmsUser.getUsername());
     }
 }

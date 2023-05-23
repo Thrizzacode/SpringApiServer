@@ -3,6 +3,7 @@ package server.api.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import server.api.model.Member;
+import server.api.model.UserIdentity;
 import server.api.repository.MemberRepository;
 
 import javax.transaction.Transactional;
@@ -12,13 +13,18 @@ import javax.transaction.Transactional;
 public class MemberService {
 
     @Autowired
-    MemberRepository memberRepository;
+    private MemberRepository memberRepository;
+
+
+    @Autowired
+    private UserIdentity userIdentity;
 
     public Iterable<Member> getAll() {
         return memberRepository.findAll();
     }
 
     public Member addMember(Member member) {
+        member.setCreator(userIdentity.getUsername());
         return memberRepository.save(member);
     }
 

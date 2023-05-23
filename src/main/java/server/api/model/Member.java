@@ -13,6 +13,9 @@ public class Member {
     private String name;
     private String phone;
     private String address;
+    private String creator;
+
+
 
     public long getId() {
         return id;
@@ -44,5 +47,13 @@ public class Member {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
     }
 }

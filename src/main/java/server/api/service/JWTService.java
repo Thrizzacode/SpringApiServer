@@ -19,8 +19,22 @@ import java.util.stream.Collectors;
 
 @Service
 public class JWTService {
+    //fields injection
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    //constructor injection
+//    private final AuthenticationManager authenticationManager;
+//    @Autowired
+//    public JWTService(AuthenticationManager authenticationManager) {
+//        this.authenticationManager = authenticationManager;
+//    }
+
+//    private AuthenticationManager authenticationManager;
+//    @Autowired
+//    public void setAuthenticationManager(AuthenticationManager authenticationManager) {
+//        this.authenticationManager = authenticationManager;
+//    }
 
     private final String KEY = "MikeIsRunningForProgrammingBeginner";
 
@@ -28,6 +42,7 @@ public class JWTService {
         Authentication authentication = new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword());
         authentication = authenticationManager.authenticate(authentication);
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        System.out.println(authentication.getPrincipal());
 
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.MINUTE, 2);

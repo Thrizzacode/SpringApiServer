@@ -1,14 +1,12 @@
 package server.api.model;
 
-import org.springframework.stereotype.Component;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "cms_user")
-public class User {
+public class CmsUser {
     @Id
     private String id;
     private String username;
@@ -16,8 +14,19 @@ public class User {
     private String identity;
     private String create_time;
 
-    public User() {
+    public CmsUser() {
 
+    }
+
+    @Override
+    public String toString() {
+        return "CmsUser{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", identity='" + identity + '\'' +
+                ", create_time='" + create_time + '\'' +
+                '}';
     }
 
     public String getId() {

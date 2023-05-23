@@ -1,6 +1,6 @@
 package server.api.service;
 
-import server.api.model.User;
+import server.api.model.CmsUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import server.api.repository.UserRepository;
@@ -16,12 +16,12 @@ public class UserService {
     @Autowired
     private EntityManager em;
 
-    public User getUser(String username) {
+    public CmsUser getUser(String username) {
         return userRepository.findByUsername(username);
     }
 
     public boolean userLogin(String username, String password) {
-        User userVerify = userRepository.findByUsernameAndPassword(username, password);
+        CmsUser userVerify = userRepository.findByUsernameAndPassword(username, password);
         if (userVerify != null) {
             return userVerify.getPassword().equals(password);
         }
