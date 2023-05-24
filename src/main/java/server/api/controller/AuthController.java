@@ -19,6 +19,7 @@ public class AuthController {
     @PostMapping
     @CrossOrigin("*")
     public ResponseEntity<Map<String, String>> issueToken(@Valid @RequestBody AuthRequest request) {
+
         String token = jwtService.generateToken(request);
         Map<String, String> response = Collections.singletonMap("token", token);
 

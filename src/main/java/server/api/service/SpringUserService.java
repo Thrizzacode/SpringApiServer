@@ -19,6 +19,7 @@ public class SpringUserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         try {
            CmsUser cmsUser= userService.getUser(username);
+            System.out.println(cmsUser);
 
            return new SpringUser(cmsUser);
         } catch (NotFoundException e) {

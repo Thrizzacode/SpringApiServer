@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import server.api.filter.JWTAuthenticationFilter;
+import server.api.model.CmsUserAuth;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -48,12 +49,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors()
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/users/**").authenticated()
-//                .antMatchers(HttpMethod.GET).permitAll()
-                .antMatchers(HttpMethod.GET).authenticated()
-                .antMatchers(HttpMethod.POST,"/api/auth/**").permitAll()
+                .antMatchers(HttpMethod.GET).hasAnyAuthority(CmsUserAuth.ADMIN.name())
+                .antMatchers(HttpMethod.POST,"/api/auth").permitAll()
+                .antMatchers(HttpMethod.POST,"/api/auth/parse").permitAll()
                 .antMatchers(HttpMethod.POST,"/api/users/login").permitAll()
-                .antMatchers(HttpMethod.POST).authenticated()
+                .antMatchers(HttpMethod.POST).hasAnyAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

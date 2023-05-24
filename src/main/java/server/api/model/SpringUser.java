@@ -1,9 +1,11 @@
 package server.api.model;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 public class SpringUser implements UserDetails {
     private CmsUser cmsUser;
@@ -19,7 +21,9 @@ public class SpringUser implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return cmsUser.getIdentity().stream()
+                .map(auth -> new SimpleGrantedAuthority(auth.name()))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -50,5 +54,12 @@ public class SpringUser implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "SpringUser{" +
+                "cmsUser=" + cmsUser +
+                '}';
     }
 }

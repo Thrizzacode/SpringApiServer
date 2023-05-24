@@ -1,8 +1,12 @@
 package server.api.model;
 
+import server.api.converter.CmsUserAuthListConverter;
+
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.List;
 
 @Entity
 @Table(name = "cms_user")
@@ -11,7 +15,8 @@ public class CmsUser {
     private String id;
     private String username;
     private String password;
-    private String identity;
+    @Convert(converter = CmsUserAuthListConverter.class)
+    private List<CmsUserAuth> identity;
     private String create_time;
 
     public CmsUser() {
@@ -53,11 +58,11 @@ public class CmsUser {
         this.password = password;
     }
 
-    public String getIdentity() {
+    public List<CmsUserAuth> getIdentity() {
         return identity;
     }
 
-    public void setIdentity(String identity) {
+    public void setIdentity(List<CmsUserAuth> identity) {
         this.identity = identity;
     }
 

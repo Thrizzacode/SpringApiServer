@@ -1,6 +1,7 @@
 package server.api.service;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -39,26 +40,34 @@ public class JWTService {
     private final String KEY = "MikeIsRunningForProgrammingBeginner";
 
     public String generateToken(AuthRequest request){
-        Authentication authentication = new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword());
-        authentication = authenticationManager.authenticate(authentication);
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        System.out.println(authentication.getPrincipal());
+        try {
+            Authentication authentication = new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword());
+            authentication = authenticationManager.authenticate(authentication);
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            System.out.println(authentication.getPrincipal());
+            System.out.println(userDetails.getAuthorities());
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.MINUTE, 2);
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.MINUTE, 1);
 
-        Claims claims = Jwts.claims();
-        claims.put("username", userDetails.getUsername());
-        claims.setExpiration(calendar.getTime());
-        claims.setIssuer("FOM_CMS");
+            Claims claims = Jwts.claims();
+            claims.put("username", userDetails.getUsername());
+            claims.put("authorities", userDetails.getAuthorities());
+            claims.setExpiration(calendar.getTime());
+            claims.setIssuer("FOM_CMS");
 
-        Key secretKey = Keys.hmacShaKeyFor(KEY.getBytes());
+            System.out.println(claims);
 
-        return Jwts.builder()
-                .setClaims(claims)
-                .signWith(secretKey)
-                .compact();
+            Key secretKey = Keys.hmacShaKeyFor(KEY.getBytes());
 
+            return Jwts.builder()
+                    .setClaims(claims)
+                    .signWith(secretKey)
+                    .compact();
+
+        }catch (ExpiredJwtException e) {
+            return e.getMessage();
+        }
 
     }
 
