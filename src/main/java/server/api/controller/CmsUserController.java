@@ -5,22 +5,22 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import server.api.model.CmsUser;
-import server.api.service.UserService;
+import server.api.service.CmsUserService;
 
 
 @RestController
 @RequestMapping("/api")
 
-public class UserController {
+public class CmsUserController {
     @Autowired
-    UserService userService;
+    CmsUserService cmsUserService;
 
     @PostMapping("/users/login")
     @CrossOrigin("*")
     public ResponseEntity<?> userLogin(@RequestBody CmsUser cmsUser) {
         System.out.println(cmsUser.getUsername());
         System.out.println(cmsUser.getPassword());
-        if (userService.userLogin(cmsUser.getUsername(), cmsUser.getPassword())) {
+        if (cmsUserService.userLogin(cmsUser.getUsername(), cmsUser.getPassword())) {
             System.out.println("OK");
             LoginSuccessInfo successInfo = new LoginSuccessInfo();
             return ResponseEntity.ok(successInfo);
@@ -74,7 +74,13 @@ public class UserController {
     @GetMapping("/users/get")
     public CmsUser getUser(@RequestBody CmsUser cmsUser) {
         System.out.println(cmsUser.getUsername());
-        System.out.println(userService.getUser(cmsUser.getUsername()));
-        return userService.getUser(cmsUser.getUsername());
+        System.out.println(cmsUserService.getUser(cmsUser.getUsername()));
+        return cmsUserService.getUser(cmsUser.getUsername());
+    }
+
+    @PostMapping("/users/add")
+    public CmsUser addUser(@RequestBody CmsUser cmsUser) {
+        System.out.println(cmsUser);
+        return cmsUserService.addUser(cmsUser);
     }
 }

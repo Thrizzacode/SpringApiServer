@@ -6,10 +6,9 @@ import org.springframework.stereotype.Service;
 import server.api.repository.UserRepository;
 
 import javax.persistence.EntityManager;
-import java.util.List;
 
 @Service
-public class UserService {
+public class CmsUserService {
     @Autowired
    private UserRepository userRepository;
 
@@ -18,6 +17,10 @@ public class UserService {
 
     public CmsUser getUser(String username) {
         return userRepository.findByUsername(username);
+    }
+
+    public CmsUser addUser(CmsUser cmsUser) {
+        return userRepository.save(cmsUser);
     }
 
     public boolean userLogin(String username, String password) {

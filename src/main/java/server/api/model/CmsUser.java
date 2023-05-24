@@ -1,15 +1,18 @@
 package server.api.model;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.format.annotation.DateTimeFormat;
 import server.api.converter.CmsUserAuthListConverter;
 
-import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "cms_user")
+@EntityListeners(AuditingEntityListener.class)
 public class CmsUser {
     @Id
     private String id;
@@ -17,7 +20,10 @@ public class CmsUser {
     private String password;
     @Convert(converter = CmsUserAuthListConverter.class)
     private List<CmsUserAuth> identity;
-    private String create_time;
+    @CreatedDate
+    @Column(name = "create_time")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date create_time;
 
     public CmsUser() {
 
@@ -66,11 +72,11 @@ public class CmsUser {
         this.identity = identity;
     }
 
-    public String getCreate_time() {
+    public Date getCreate_time() {
         return create_time;
     }
 
-    public void setCreate_time(String create_time) {
+    public void setCreate_time(Date create_time) {
         this.create_time = create_time;
     }
 }

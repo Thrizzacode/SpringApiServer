@@ -13,12 +13,12 @@ import server.api.model.SpringUser;
 public class SpringUserService implements UserDetailsService {
 
     @Autowired
-    private UserService userService;
+    private CmsUserService cmsUserService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         try {
-           CmsUser cmsUser= userService.getUser(username);
+           CmsUser cmsUser= cmsUserService.getUser(username);
             System.out.println(cmsUser);
 
            return new SpringUser(cmsUser);

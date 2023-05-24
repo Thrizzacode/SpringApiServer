@@ -1,6 +1,6 @@
 package server.api.controller;
 
-import server.api.service.UserService;
+import server.api.service.CmsUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 public class UserController {
     @Autowired
-    UserService userService;
+    CmsUserService cmsUserService;
 
     //    @RequestMapping("/users/add")
 //    @PostMapping("/users/add")
@@ -19,12 +19,12 @@ public class UserController {
 //        User tUser = new User();
 //        tUser.setId("001");
 //        tUser.setUserName("我是001");
-//        userService.addUser(tUser);
+//        cmsUserService.addUser(tUser);
 //        return "OK";
 //    }
 
     @GetMapping("/users/get")
     public Object getUser() {
-        return userService.getUser();
+        return cmsUserService.getUser();
     }
 }
