@@ -20,6 +20,7 @@ public class CmsUser {
     private String id;
     private String username;
     private String password;
+    private String email;
     @Convert(converter = CmsUserAuthListConverter.class)
     private List<CmsUserAuth> identity;
     @CreatedDate
@@ -37,6 +38,7 @@ public class CmsUser {
                 "id='" + id + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
                 ", identity='" + identity + '\'' +
                 ", create_time='" + create_time + '\'' +
                 '}';
@@ -64,6 +66,14 @@ public class CmsUser {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public List<CmsUserAuth> getIdentity() {
