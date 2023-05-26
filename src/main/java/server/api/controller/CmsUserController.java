@@ -4,8 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import server.api.model.CmsUser;
 import server.api.service.CmsUserService;
+
+import java.net.URI;
 
 
 @RestController
@@ -78,9 +81,21 @@ public class CmsUserController {
         return cmsUserService.getUser(cmsUser.getUsername());
     }
 
-    @PostMapping("/users/add")
-    public CmsUser addUser(@RequestBody CmsUser cmsUser) {
+    @PostMapping("/users/signup")
+    @CrossOrigin("*")
+    public ResponseEntity<CmsUser> addUser(@RequestBody CmsUser cmsUser) {
         System.out.println(cmsUser);
-        return cmsUserService.addUser(cmsUser);
+        CmsUser addUser = cmsUserService.addUser(cmsUser);
+        if(addUser != null) {
+            URI location = ServletUriComponentsBuilder
+                    .fromCurrentRequest()
+                    .path("/{id}")
+                    .buildAndExpand(addUser.getId())
+                    .toUri();
+            return ResponseEntity.created(location).body(addUser);
+        }
+        else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 }

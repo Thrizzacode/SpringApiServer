@@ -7,5 +7,4 @@ public interface UserRepository extends CrudRepository<CmsUser, String> {
 
     CmsUser findByUsername(String username);
 
-    CmsUser findByUsernameAndPassword(String username, String password);
 }

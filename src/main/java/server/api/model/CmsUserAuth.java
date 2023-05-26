@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import java.util.Arrays;
 
 public enum CmsUserAuth {
-    ADMIN,TS;
+    ADMIN,TS,NORMAL;
 
     @JsonCreator
     public CmsUserAuth fromString(String key) {

@@ -1,8 +1,8 @@
 package server.api.model;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.format.annotation.DateTimeFormat;
 import server.api.converter.CmsUserAuthListConverter;
 
@@ -15,6 +15,8 @@ import java.util.List;
 @EntityListeners(AuditingEntityListener.class)
 public class CmsUser {
     @Id
+    @GeneratedValue(generator = "user_id")
+    @GenericGenerator(name = "user_id", strategy = "uuid")
     private String id;
     private String username;
     private String password;

@@ -31,29 +31,6 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private JWTService jwtService;
 
-    //constructor injection
-//    private final UserDetailsService userDetailsService;
-//    private final JWTService jwtService;
-//
-//    @Autowired
-//    public JWTAuthenticationFilter(UserDetailsService userDetailsService, JWTService jwtService) {
-//        this.userDetailsService = userDetailsService;
-//        this.jwtService = jwtService;
-//    }
-
-//    private JWTService jwtService;
-//    private  UserDetailsService userDetailsService;
-
-//    @Autowired
-//    public void setJwtService(JWTService jwtService) {
-//        this.jwtService = jwtService;
-//    }
-//
-//    @Autowired
-//    public void setUserDetailsService(UserDetailsService userDetailsService) {
-//        this.userDetailsService = userDetailsService;
-//    }
-
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
