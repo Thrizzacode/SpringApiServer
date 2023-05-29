@@ -2,58 +2,76 @@ package server.api.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailAuthenticationException;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.security.core.parameters.P;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
+import server.api.config.MailConfig;
 import server.api.model.SendMailRequest;
 
 import javax.annotation.PostConstruct;
+import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
 @Service
 public class MailService {
+    @Autowired
+    private MailConfig mailConfig;
+    @Autowired
+    TemplateEngine templateEngine;
+    private JavaMailSenderImpl mailSender;
 
     private final Logger LOGGER = LoggerFactory.getLogger(MailService.class);
-
-    private static final String HOST = "smtp.gmail.com";
-    private static final int PORT = 587;
-    private static final String PROTOCOL = "smtp";
-    private static final boolean AUTH = true;
-    private static final boolean ENABLED_STARTTLS = true;
-    private static final String USERNAME = "mikework0814@gmail.com";
-    private static final String PASSWORD = "mbgjcjqaegmmvpoe";
-    private JavaMailSenderImpl mailSender;
 
     @PostConstruct
     private void init() {
         mailSender = new JavaMailSenderImpl();
-        mailSender.setHost(HOST);
-        mailSender.setPort(PORT);
-        mailSender.setUsername(USERNAME);
-        mailSender.setPassword(PASSWORD);
+        mailSender.setHost(mailConfig.getHost());
+        mailSender.setPort(mailConfig.getPort());
+        mailSender.setUsername(mailConfig.getUsername());
+        mailSender.setPassword(mailConfig.getPassword());
+
         Properties props = mailSender.getJavaMailProperties();
-        props.put("mail.transport.protocol", PROTOCOL);
-        props.put("mail.smtp.auth", AUTH);
-        props.put("mail.smtp.starttls.enable", ENABLED_STARTTLS);
+        props.put("mail.transport.protocol", mailConfig.getProtocol());
+        props.put("mail.smtp.auth", mailConfig.isAuthEnabled());
+        props.put("mail.smtp.starttls.enable", mailConfig.isStarttlsEnabled());
     }
 
     public void sendMail(SendMailRequest request) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(USERNAME);
-        message.setTo(request.getReceivers());
-        message.setSubject(request.getSubject());
-        message.setText(request.getContent());
+        //SimpleMailMessage
+//        SimpleMailMessage message = new SimpleMailMessage();
+//        message.setFrom(mailConfig.getUsername());
+//        message.setTo(request.getReceivers());
+//        message.setSubject(request.getSubject());
+//        message.setText(request.getContent());
 
-        try {
-            mailSender.send(message);
-        } catch (MailAuthenticationException e) {
+        //MimeMessage
+        try{
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper messageHelper = new MimeMessageHelper(message,true,"UTF-8");
+            messageHelper.setFrom(mailConfig.getUsername());
+            messageHelper.setTo(request.getReceivers());
+            messageHelper.setSubject(request.getSubject());
+            Context context = new Context();
+            context.setVariable("content",request.getContent());
+            String emailContent = templateEngine.process("test",context);
+            messageHelper.setText(emailContent,true);
+            try {
+                mailSender.send(message);
+            } catch (MailAuthenticationException e) {
+                LOGGER.error(e.getMessage());
+            } catch (Exception e) {
+                LOGGER.warn(e.getMessage());
+            }
+        }catch (Exception e){
             LOGGER.error(e.getMessage());
-        } catch (Exception e) {
-            LOGGER.warn(e.getMessage());
         }
+
+
+
 
     }
 
