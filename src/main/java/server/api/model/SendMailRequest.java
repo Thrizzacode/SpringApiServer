@@ -4,6 +4,8 @@ import javax.validation.constraints.NotEmpty;
 
 public class SendMailRequest {
     @NotEmpty
+    private String name;
+    @NotEmpty
     private String subject;
 
     @NotEmpty
@@ -11,6 +13,14 @@ public class SendMailRequest {
 
     @NotEmpty
     private String[] receivers;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getSubject() {
         return subject;

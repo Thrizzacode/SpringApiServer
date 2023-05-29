@@ -3,6 +3,8 @@ package server.api.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.MailAuthenticationException;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -57,8 +59,12 @@ public class MailService {
             messageHelper.setSubject(request.getSubject());
             Context context = new Context();
             context.setVariable("content",request.getContent());
+            context.setVariable("name",request.getName());
             String emailContent = templateEngine.process("test",context);
             messageHelper.setText(emailContent,true);
+//            ClassPathResource BannerImageResource = new ClassPathResource("Banner.png");
+            FileSystemResource BannerImageResource = new FileSystemResource("C:\\Users\\student\\Desktop\\api\\src\\main\\resources\\templates\\Banner.jpg");
+            messageHelper.addInline("BannerImage",BannerImageResource);
             try {
                 mailSender.send(message);
             } catch (MailAuthenticationException e) {

@@ -5,9 +5,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
+<img th:src="|cid:${BannerImage}|" src="" alt="banner" />
 <p>
     Hello, <span th:text="${name}">Peter Static</span>!
 </p>
+<p th:text="${content}"></p>
 <p>
     Wow! You've got a long name (more than 10 chars)!
 </p>
