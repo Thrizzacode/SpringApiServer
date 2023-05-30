@@ -8,6 +8,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import server.api.model.CmsUser;
 import server.api.service.CmsUserService;
 
+import javax.servlet.http.HttpSession;
 import java.net.URI;
 
 
@@ -81,11 +82,11 @@ public class CmsUserController {
         return cmsUserService.getUser(cmsUser.getUsername());
     }
 
+
     @PostMapping("/users/signup")
     @CrossOrigin("*")
-    public ResponseEntity<CmsUser> addUser(@RequestBody CmsUser cmsUser) {
-        System.out.println(cmsUser);
-        CmsUser addUser = cmsUserService.addUser(cmsUser);
+    public ResponseEntity<CmsUser> addUser(@RequestBody CmsUser cmsUser, HttpSession session) {
+        CmsUser addUser = cmsUserService.addUser(cmsUser, session);
         if(addUser != null) {
             URI location = ServletUriComponentsBuilder
                     .fromCurrentRequest()

@@ -1,12 +1,13 @@
 package server.api.service;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import server.api.model.CmsUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import server.api.model.CmsUser;
 import server.api.repository.UserRepository;
 
 import javax.persistence.EntityManager;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 @Transactional
@@ -28,7 +29,7 @@ public class CmsUserService {
         return userRepository.findByUsername(username);
     }
 
-    public CmsUser addUser(CmsUser cmsUser) {
+    public CmsUser addUser(CmsUser cmsUser, HttpSession session) {
         CmsUser dbUser = userRepository.findByUsername(cmsUser.getUsername());
         System.out.println("dbUser: " + dbUser);
         if(dbUser != null) {

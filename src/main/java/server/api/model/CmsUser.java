@@ -27,6 +27,8 @@ public class CmsUser {
     @Column(name = "create_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date create_time;
+    @Transient
+    private String verifyCode;
 
     public CmsUser() {
 
@@ -41,6 +43,7 @@ public class CmsUser {
                 ", email='" + email + '\'' +
                 ", identity='" + identity + '\'' +
                 ", create_time='" + create_time + '\'' +
+                ", verifyCode='" + verifyCode + '\'' +
                 '}';
     }
 
@@ -90,5 +93,13 @@ public class CmsUser {
 
     public void setCreate_time(Date create_time) {
         this.create_time = create_time;
+    }
+
+    public String getVerifyCode() {
+        return verifyCode;
+    }
+
+    public void setVerifyCode(String verifyCode) {
+        this.verifyCode = verifyCode;
     }
 }

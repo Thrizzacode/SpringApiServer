@@ -6,16 +6,26 @@ import org.springframework.web.bind.annotation.*;
 import server.api.model.SendMailRequest;
 import server.api.service.MailService;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api/sendmail")
+@RequestMapping("/api")
 public class MailController {
 
     @Autowired
     private MailService mailService;
 
-    @PostMapping
+    @PostMapping("/verifycode")
+    @CrossOrigin("*")
+    public ResponseEntity<Void> getVerifyCode(@Valid @RequestBody SendMailRequest request, HttpSession session)
+    {
+        mailService.sendVerifyCode(request, session);
+        System.out.println("send");
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/sendmail")
     @CrossOrigin("*")
     public ResponseEntity<Void> sendMail(@Valid @RequestBody SendMailRequest request)
     {
