@@ -1,11 +1,13 @@
 package server.api.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import server.api.model.CmsUser;
 import server.api.repository.UserRepository;
 
+import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
@@ -16,6 +18,8 @@ public class CmsUserService {
     private UserRepository userRepository;
 
     private BCryptPasswordEncoder passwordEncoder;
+    @Resource
+    private StringRedisTemplate stringRedisTemplate;
 
     public CmsUserService(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -30,14 +34,21 @@ public class CmsUserService {
     }
 
     public CmsUser addUser(CmsUser cmsUser, HttpSession session) {
-        CmsUser dbUser = userRepository.findByUsername(cmsUser.getUsername());
-        System.out.println("dbUser: " + dbUser);
-        if(dbUser != null) {
+        String code = cmsUser.getVerifyCode();
+        String redisCode = stringRedisTemplate.opsForValue().get("verifyCode");
+        if(code != null && code.equals(redisCode)){
+            CmsUser dbUser = userRepository.findByUsername(cmsUser.getUsername());
+            stringRedisTemplate.delete("verifyCode");
+            System.out.println("dbUser: " + dbUser);
+            if(dbUser != null) {
+                return null;
+            }
+            else{
+                cmsUser.setPassword(passwordEncoder.encode(cmsUser.getPassword()));
+                return userRepository.save(cmsUser);
+            }
+        }else {
             return null;
-        }
-        else{
-            cmsUser.setPassword(passwordEncoder.encode(cmsUser.getPassword()));
-            return userRepository.save(cmsUser);
         }
     }
 

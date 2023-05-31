@@ -1,5 +1,7 @@
 package server.api.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,16 @@ public class CmsUserController {
     @Autowired
     CmsUserService cmsUserService;
 
+    @Operation(
+            summary = "登入",
+            description = "帶入帳號及密碼進行驗證登入",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "登入成功"
+                    ),
+            }
+    )
     @PostMapping("/users/login")
     @CrossOrigin("*")
     public ResponseEntity<?> userLogin(@RequestBody CmsUser cmsUser) {
@@ -35,7 +47,7 @@ public class CmsUserController {
         }
     }
 
-    static class LoginSuccessInfo{
+    static class LoginSuccessInfo {
         private int status;
         private String message;
 
@@ -60,14 +72,16 @@ public class CmsUserController {
             this.message = message;
         }
     }
-     static class LoginErrorInfo {
+
+    static class LoginErrorInfo {
         private String error;
 
         public LoginErrorInfo(String error) {
             this.error = error;
         }
 
-        public String getError() { return error;
+        public String getError() {
+            return error;
         }
 
         public void setError(String error) {
@@ -87,15 +101,14 @@ public class CmsUserController {
     @CrossOrigin("*")
     public ResponseEntity<CmsUser> addUser(@RequestBody CmsUser cmsUser, HttpSession session) {
         CmsUser addUser = cmsUserService.addUser(cmsUser, session);
-        if(addUser != null) {
+        if (addUser != null) {
             URI location = ServletUriComponentsBuilder
                     .fromCurrentRequest()
                     .path("/{id}")
                     .buildAndExpand(addUser.getId())
                     .toUri();
             return ResponseEntity.created(location).body(addUser);
-        }
-        else {
+        } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }

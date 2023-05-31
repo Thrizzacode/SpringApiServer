@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>註冊確認郵件</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .banner {
+            width: 30%;
+        }
+        h1 {
+            color: #333;
+        }
+        .message {
+            margin-top: 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+<img class="banner" src="https://drive.google.com/uc?export=view&id=1G5aUiwudM4AHhYNcZiNQpwZzmr0nUgTK" alt="banner" />
+<h1>註冊成功</h1>
+<p class="message">恭喜您成功註冊！</p>
+<p class="message">以下是您的註冊詳細資訊：</p>
+<ul>
+  <li class="message"><strong>使用者名稱：</strong>[[${name}]]</li>
+  <li class="message"><strong>電子郵件：</strong>[[${email}]]</li>
+  <li class="message"><strong>註冊日期：</strong>[[${registrationDate}]]</li>
+</ul>
+</body>
+</html>
