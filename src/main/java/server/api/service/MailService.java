@@ -65,7 +65,7 @@ public class MailService {
                String verifyCode = VerifyCodeGenerateUtil.generateVerifyCode();
                context.setVariable("verifyCode",verifyCode);
                //將驗證碼存入redis
-               stringRedisTemplate.opsForValue().set("verifyCode",verifyCode,1, TimeUnit.MINUTES);
+               stringRedisTemplate.opsForValue().set("verifyCode",verifyCode,10, TimeUnit.MINUTES);
                String emailContent = templateEngine.process("verifyCode",context);
                messageHelper.setText(emailContent,true);
                try {
