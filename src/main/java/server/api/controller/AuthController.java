@@ -15,13 +15,12 @@ import java.util.Collections;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/auth")
 @Tag(name = "Auth", description = "產生與解析Token")
-public class AuthController {
+public class AuthController extends ApiController{
     @Autowired
     private JWTService jwtService;
 
-    @PostMapping
+    @PostMapping("/auth/token")
     @Operation(
             summary = "產生Token",
             description = "透過API拿到JWT Token"
@@ -35,7 +34,7 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/parse")
+    @PostMapping("/auth/parse")
     @Operation(
             summary = "解析Token",
             description = "透過API解析JWT Token"

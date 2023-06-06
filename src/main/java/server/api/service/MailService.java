@@ -80,14 +80,6 @@ public class MailService {
            }
     }
     public void sendMail(SendMailRequest request) {
-        //SimpleMailMessage
-//        SimpleMailMessage message = new SimpleMailMessage();
-//        message.setFrom(mailConfig.getUsername());
-//        message.setTo(request.getReceivers());
-//        message.setSubject(request.getSubject());
-//        message.setText(request.getContent());
-
-        //MimeMessage
         try{
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper messageHelper = new MimeMessageHelper(message,true,"UTF-8");
@@ -100,6 +92,7 @@ public class MailService {
             context.setVariable("email", Arrays.toString(request.getReceivers()));
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String registrationDate = dateFormat.format(new Date());
+            //註冊時間
             context.setVariable("registrationDate",registrationDate);
             String emailContent = templateEngine.process("signUpSuccess",context);
             messageHelper.setText(emailContent,true);

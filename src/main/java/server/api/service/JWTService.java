@@ -48,7 +48,8 @@ public class JWTService {
             System.out.println(userDetails.getAuthorities());
 
             Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.MINUTE, 1);
+            //token期限
+            calendar.add(Calendar.HOUR, 1);
 
             Claims claims = Jwts.claims();
             claims.put("username", userDetails.getUsername());

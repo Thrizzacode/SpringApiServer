@@ -9,9 +9,8 @@ import server.api.model.Member;
 import server.api.service.MemberService;
 
 @RestController
-@RequestMapping("/api")
 @Tag(name = "Member", description = "會員資料")
-public class MemberController {
+public class MemberController extends ApiController{
 
     @Autowired
     MemberService memberService;

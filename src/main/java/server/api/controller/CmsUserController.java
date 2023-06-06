@@ -16,9 +16,8 @@ import java.net.URI;
 
 
 @RestController
-@RequestMapping("/api")
 @Tag(name = "CmsUser", description = "後台管理員資料")
-public class CmsUserController {
+public class CmsUserController extends ApiController{
     @Autowired
     CmsUserService cmsUserService;
 

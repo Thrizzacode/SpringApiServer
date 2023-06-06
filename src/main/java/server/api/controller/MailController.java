@@ -12,9 +12,8 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api")
 @Tag(name = "Mail", description = "信箱相關服務")
-public class MailController {
+public class MailController extends ApiController{
 
     @Autowired
     private MailService mailService;
