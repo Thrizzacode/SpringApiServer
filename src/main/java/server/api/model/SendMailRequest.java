@@ -1,7 +1,10 @@
 package server.api.model;
 
+import io.swagger.v3.oas.annotations.Hidden;
+
 import javax.validation.constraints.NotEmpty;
 
+@Hidden
 public class SendMailRequest {
     @NotEmpty
     private String name;

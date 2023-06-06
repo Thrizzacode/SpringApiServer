@@ -11,7 +11,7 @@ public class VerifyCodeGenerateUtil {
     private static final Random random = new SecureRandom();
 
     public static String generateVerifyCode() {
-        StringBuilder sb = new StringBuilder(6);
+        var sb = new StringBuilder(6);
         for (int i = 0; i < 6; i++) {
             sb.append(numbers.charAt(random.nextInt(numbers.length())));
         }

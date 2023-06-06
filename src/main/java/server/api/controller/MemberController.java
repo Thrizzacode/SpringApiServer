@@ -27,7 +27,6 @@ public class MemberController {
                     ),
             }
     )
-    @CrossOrigin("*")
     public Iterable<Member> getAll() {
         return memberService.getAll();
     }
@@ -43,7 +42,6 @@ public class MemberController {
                     ),
             }
     )
-    @CrossOrigin("*")
     public Member addMember(@RequestBody Member member) {
         return memberService.addMember(member);
     }
@@ -59,7 +57,6 @@ public class MemberController {
                     ),
             }
     )
-    @CrossOrigin("*")
     public Member editMember(@RequestBody Member member) {
         return memberService.editMember(member);
     }
@@ -75,7 +72,6 @@ public class MemberController {
                     ),
             }
     )
-    @CrossOrigin("*")
     public String deleteById(@PathVariable Long id) {
         memberService.deleteById(id);
         return "Deleted";

@@ -1,5 +1,7 @@
 package server.api.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -9,10 +11,15 @@ import javax.persistence.Table;
 public class Member {
 
     @Id
+    @Schema(description = "會員ID")
     private long id;
+    @Schema(description = "會員姓名")
     private String name;
+    @Schema(description = "會員電話")
     private String phone;
+    @Schema(description = "會員地址")
     private String address;
+    @Schema(description = "會員建立者")
     private String creator;
 
 

@@ -2,6 +2,7 @@ package server.api.model;
 
 import javax.validation.constraints.NotBlank;
 
+//@Hidden
 public class AuthRequest {
 
     @NotBlank

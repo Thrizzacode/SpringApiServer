@@ -1,5 +1,6 @@
 package server.api.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,10 @@ public class MailController {
     private MailService mailService;
 
     @PostMapping("/verifycode")
-    @CrossOrigin("*")
+    @Operation(
+            summary = "寄送驗證碼",
+            description = "寄送驗證碼至信箱"
+    )
     public ResponseEntity<Void> getVerifyCode(@Valid @RequestBody SendMailRequest request, HttpSession session)
     {
         mailService.sendVerifyCode(request, session);
@@ -28,7 +32,10 @@ public class MailController {
     }
 
     @PostMapping("/sendmail")
-    @CrossOrigin("*")
+    @Operation(
+            summary = "寄送信件",
+            description = "寄送信件至信箱"
+    )
     public ResponseEntity<Void> sendMail(@Valid @RequestBody SendMailRequest request)
     {
         mailService.sendMail(request);

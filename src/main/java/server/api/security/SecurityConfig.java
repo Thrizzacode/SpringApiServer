@@ -13,6 +13,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import server.api.filter.JWTAuthenticationFilter;
 
 @EnableWebSecurity
@@ -22,25 +25,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final JWTAuthenticationFilter jwtAuthenticationFilter;
 
     @Autowired
-    //Is Lazy a good idea here?
+    //添加Lazy注解，避免依賴循環的問題
     @Lazy
     public SecurityConfig(UserDetailsService userDetailsService, JWTAuthenticationFilter jwtAuthenticationFilter) {
         this.userDetailsService = userDetailsService;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
 
-//    private  JWTAuthenticationFilter jwtAuthenticationFilter;
-//    @Autowired
-//    public void setJwtAuthenticationFilter(JWTAuthenticationFilter jwtAuthenticationFilter) {
-//        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
-//    }
-
-    //fields injection
-//    @Autowired
-//    private UserDetailsService userDetailsService;
-//
-//    @Autowired
-//    private JWTAuthenticationFilter jwtAuthenticationFilter;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -62,6 +53,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .csrf().disable();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.addAllowedOrigin("http://127.0.0.1:5173"); // 允许所有来源
+        configuration.addAllowedMethod("*"); // 允许所有 HTTP 方法
+        configuration.addAllowedHeader("*"); // 允许所有请求头
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration); // 对所有路径应用 CORS 配置
+
+        return source;
     }
 
     @Override

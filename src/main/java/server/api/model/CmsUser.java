@@ -1,5 +1,6 @@
 package server.api.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -7,6 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import server.api.converter.CmsUserAuthListConverter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.util.Date;
 import java.util.List;
 
@@ -17,17 +19,25 @@ public class CmsUser {
     @Id
     @GeneratedValue(generator = "user_id")
     @GenericGenerator(name = "user_id", strategy = "uuid")
+    @Schema(description = "管理員ID")
     private String id;
+    @Schema(description = "管理員帳號")
     private String username;
+    @Schema(description = "管理員密碼")
     private String password;
+    @Email
+    @Schema(description = "管理員信箱")
     private String email;
     @Convert(converter = CmsUserAuthListConverter.class)
+    @Schema(description = "管理員權限")
     private List<CmsUserAuth> identity;
     @CreatedDate
     @Column(name = "create_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Schema(description = "建立時間")
     private Date create_time;
     @Transient
+    @Schema(description = "驗證碼")
     private String verifyCode;
 
     public CmsUser() {

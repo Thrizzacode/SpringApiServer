@@ -1,6 +1,8 @@
 package server.api.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +26,7 @@ public class AuthController {
             summary = "產生Token",
             description = "透過API拿到JWT Token"
     )
-    @CrossOrigin("*")
+    @ApiResponse(responseCode = "200", description = "成功產生Token", content = {@Content()})
     public ResponseEntity<Map<String, String>> issueToken(@Valid @RequestBody AuthRequest request) {
 
         String token = jwtService.generateToken(request);
@@ -38,7 +40,7 @@ public class AuthController {
             summary = "解析Token",
             description = "透過API解析JWT Token"
     )
-    @CrossOrigin("*")
+    @ApiResponse(responseCode = "200", description = "成功解析Token", content = {@Content()})
     public ResponseEntity<Map<String, Object>> parseToken(@RequestBody Map<String, String> request) {
         String token = request.get("token");
         Map<String, Object> response = jwtService.parseToken(token);

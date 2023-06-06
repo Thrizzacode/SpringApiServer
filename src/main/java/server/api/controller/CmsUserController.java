@@ -33,7 +33,6 @@ public class CmsUserController {
             }
     )
     @PostMapping("/users/login")
-    @CrossOrigin("*")
     public ResponseEntity<?> userLogin(@RequestBody CmsUser cmsUser) {
         System.out.println(cmsUser.getUsername());
         System.out.println(cmsUser.getPassword());
@@ -91,15 +90,32 @@ public class CmsUserController {
     }
 
     @GetMapping("/users/get")
+    @Operation(
+            summary = "取得使用者資料",
+            description = "取得使用者資料",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "取得使用者資料"
+                    ),
+            }
+    )
     public CmsUser getUser(@RequestBody CmsUser cmsUser) {
-        System.out.println(cmsUser.getUsername());
-        System.out.println(cmsUserService.getUser(cmsUser.getUsername()));
         return cmsUserService.getUser(cmsUser.getUsername());
     }
 
 
     @PostMapping("/users/signup")
-    @CrossOrigin("*")
+    @Operation(
+            summary = "註冊",
+            description = "註冊",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "註冊成功"
+                    ),
+            }
+    )
     public ResponseEntity<CmsUser> addUser(@RequestBody CmsUser cmsUser, HttpSession session) {
         CmsUser addUser = cmsUserService.addUser(cmsUser, session);
         if (addUser != null) {
