@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 import server.api.model.Announcement;
 import server.api.service.AnnouncementService;
@@ -15,6 +16,35 @@ public class AnnouncementController extends ApiController{
     @Autowired
     private AnnouncementService announcementService;
 
+    @GetMapping("/announcements")
+    @Operation(
+            summary = "取得所有公告",
+            description = "取得所有公告",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "成功取得所有公告"
+                    ),
+            }
+    )
+    public Iterable<Announcement> getAllByPageable(Pageable pageable) {
+        return announcementService.getAll(pageable);
+    }
+
+    @GetMapping("/announcements/count")
+    @Operation(
+            summary = "取得公告總條數",
+            description = "取得公告總條數",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "成功取得公告總條數"
+                    ),
+            }
+    )
+    public long getAnnouncementCount() {
+        return announcementService.getAnnouncementCount();
+    }
     @PostMapping("/announcements/add")
     @Operation(
             summary = "新增公告",
@@ -30,22 +60,9 @@ public class AnnouncementController extends ApiController{
         return announcementService.addAnnouncement(announcement);
     }
 
-    @GetMapping("/announcements")
-    @Operation(
-            summary = "取得所有公告",
-            description = "取得所有公告",
-            responses = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "成功取得所有公告"
-                    ),
-            }
-    )
-    public Iterable<Announcement> getAll() {
-        return announcementService.getAll();
-    }
 
-    @PostMapping("/announcements/edit")
+
+    @PutMapping("/announcements/edit")
     @Operation(
             summary = "編輯公告",
             description = "編輯公告",

@@ -1,6 +1,7 @@
 package server.api.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import server.api.model.Announcement;
 import server.api.model.UserIdentity;
@@ -18,12 +19,16 @@ public class AnnouncementService {
     private UserIdentity userIdentity;
 
     //查詢所有公告
-    public Iterable<Announcement> getAll() {
-        return announcementRepository.findAll();
+    public Iterable<Announcement> getAll(Pageable pageable) {
+        return announcementRepository.findAll(pageable);
+    }
+    //取得公告總條數
+    public long getAnnouncementCount() {
+        return announcementRepository.count();
     }
     //新增公告
     public Announcement addAnnouncement(Announcement announcement) {
-//        announcement.setPublisher(userIdentity.getUsername());
+        announcement.setPublisher(userIdentity.getUsername());
         return announcementRepository.save(announcement);
     }
     //編輯公告
