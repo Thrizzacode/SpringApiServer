@@ -58,7 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("http://127.0.0.1:5173"); // 允许所有来源
+        configuration.addAllowedOrigin("http://localhost:5173"); // 允许所有来源
         configuration.addAllowedMethod("*"); // 允许所有 HTTP 方法
         configuration.addAllowedHeader("*"); // 允许所有请求头
 

@@ -22,10 +22,6 @@ public class AnnouncementService {
     public Iterable<Announcement> getAll(Pageable pageable) {
         return announcementRepository.findAll(pageable);
     }
-    //取得公告總條數
-    public long getAnnouncementCount() {
-        return announcementRepository.count();
-    }
     //新增公告
     public Announcement addAnnouncement(Announcement announcement) {
         announcement.setPublisher(userIdentity.getUsername());

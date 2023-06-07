@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 import server.api.model.Member;
 import server.api.service.MemberService;
@@ -26,8 +27,23 @@ public class MemberController extends ApiController{
                     ),
             }
     )
-    public Iterable<Member> getAll() {
-        return memberService.getAll();
+    public Iterable<Member> getAll(Pageable pageable) {
+        return memberService.getAll(pageable);
+    }
+
+    @GetMapping("/members/{id}")
+    @Operation(
+            summary = "取得單一會員資料",
+            description = "取得單一會員資料",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "成功取得單一會員資料"
+                    ),
+            }
+    )
+    public Member getMember(@PathVariable("id") Long id) {
+        return memberService.getMemberById(id);
     }
 
     @PostMapping("/members/add")

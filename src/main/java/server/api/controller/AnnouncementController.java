@@ -31,20 +31,6 @@ public class AnnouncementController extends ApiController{
         return announcementService.getAll(pageable);
     }
 
-    @GetMapping("/announcements/count")
-    @Operation(
-            summary = "取得公告總條數",
-            description = "取得公告總條數",
-            responses = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "成功取得公告總條數"
-                    ),
-            }
-    )
-    public long getAnnouncementCount() {
-        return announcementService.getAnnouncementCount();
-    }
     @PostMapping("/announcements/add")
     @Operation(
             summary = "新增公告",
